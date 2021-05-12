@@ -2,6 +2,7 @@ package link
 
 import (
 	"errors"
+	"net"
 	"sync"
 	"sync/atomic"
 )
@@ -26,18 +27,22 @@ type Session struct {
 	lastCloseCallback  *closeCallback
 
 	State interface{}
+
+	conn net.Conn
+	seq  int32
 }
 
-func NewSession(codec Codec, sendChanSize int) *Session {
-	return newSession(nil, codec, sendChanSize)
+func NewSession(codec Codec, conn net.Conn, sendChanSize int) *Session {
+	return newSession(nil, codec, conn, sendChanSize)
 }
 
-func newSession(manager *Manager, codec Codec, sendChanSize int) *Session {
+func newSession(manager *Manager, codec Codec, conn net.Conn, sendChanSize int) *Session {
 	session := &Session{
 		codec:     codec,
 		manager:   manager,
 		closeChan: make(chan int),
 		id:        atomic.AddUint64(&globalSessionId, 1),
+		conn:      conn,
 	}
 	if sendChanSize > 0 {
 		session.sendChan = make(chan interface{}, sendChanSize)
@@ -199,4 +204,16 @@ func (session *Session) invokeCloseCallbacks() {
 	for callback := session.firstCloseCallback; callback != nil; callback = callback.Next {
 		callback.Func()
 	}
+}
+
+func (session *Session) RemoteAddr() net.Addr {
+	return session.conn.RemoteAddr()
+}
+
+func (session *Session) Seq() int32 {
+	return atomic.LoadInt32(&session.seq)
+}
+
+func (session *Session) SetSeq(val int32) {
+	atomic.StoreInt32(&session.seq, val)
 }

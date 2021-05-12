@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"link"
+	"github.com/spphins/link"
 )
 
 type MyMessage1 struct {

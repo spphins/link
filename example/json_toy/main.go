@@ -3,8 +3,8 @@ package main
 import (
 	"log"
 
-	"link"
-	"link/codec"
+	"github.com/spphins/link"
+	"github.com/spphins/link/codec"
 )
 
 type AddReq struct {

@@ -5,7 +5,7 @@ import (
 	"io"
 	"reflect"
 
-	"link"
+	"github.com/spphins/link"
 )
 
 type JsonProtocol struct {

@@ -1,4 +1,4 @@
-module link
+module github.com/spphins/link
 
 go 1.16
 

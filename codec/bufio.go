@@ -4,7 +4,7 @@ import (
 	"bufio"
 	"io"
 
-	"link"
+	"github.com/spphins/link"
 )
 
 func Bufio(base link.Protocol, readBuf, writeBuf int) link.Protocol {

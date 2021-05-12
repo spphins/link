@@ -7,7 +7,7 @@ import (
 	"io"
 	"math"
 
-	"link"
+	"github.com/spphins/link"
 )
 
 var ErrTooLargePacket = errors.New("Too Large Packet")

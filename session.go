@@ -222,3 +222,7 @@ func (session *Session) IP() string {
 	ip, _, _ := net.SplitHostPort(session.RemoteAddr().String())
 	return ip
 }
+
+func (session *Session) Conn() net.Conn {
+	return session.conn
+}

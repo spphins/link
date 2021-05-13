@@ -217,3 +217,8 @@ func (session *Session) Seq() int32 {
 func (session *Session) SetSeq(val int32) {
 	atomic.StoreInt32(&session.seq, val)
 }
+
+func (session *Session) IP() string {
+	ip, _, _ := net.SplitHostPort(session.RemoteAddr().String())
+	return ip
+}
